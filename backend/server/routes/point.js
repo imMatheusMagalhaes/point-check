@@ -12,6 +12,11 @@ router.post('/output', async (req, res, next) => {
   res.send(point);
 });
 
+router.post('/create', async (req, res, next) => {
+  const point = await pointService.create(req.body)
+  res.send(point);
+});
+
 router.get('/', async (req, res, next) => {
   const points = await pointService.get_all()
   res.send(points);

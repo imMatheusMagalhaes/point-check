@@ -12,6 +12,11 @@ const get_inputs_without_output = async () => await Point.findOne({
 	}
 })
 
+const create = async (body) => {
+	const point = await new Point(body).save()
+	return point
+} 
+
 const set_input = async (body) => {
 	const inputs_without_output = await get_inputs_without_output()
 	const current_time = moment(body?.time) ?? get_current_time()
@@ -52,4 +57,4 @@ const get_all = async () => {
 
 
 
-export default { set_input, set_output, get_all, update_projects, get_inputs_without_output }
+export default { create, set_input, set_output, get_all, update_projects, get_inputs_without_output }
