@@ -35,15 +35,21 @@ const set_output = async (body) => {
 }
 
 const update_projects = async (body) => {
+	const { projects } = body
 	const lastPoint = await get_inputs_without_output()
 	if (lastPoint) {
-		const current_time = moment(body?.time) ?? get_current_time()
-		await Point.updateOne({ _id: lastPoint._id }, { outputTime: current_time })
-		return { message: "saida registrada.", time: format_time(current_time) }
+		const db_projects = [...lastPoint.projects, ...projects]
+		await Point.updateOne({ _id: lastPoint._id }, { projects: db_projects })
+		return { message: `${lastPoint._id} - atualizado` }
 	} else return { message: "nenhuma entrada registrada." }
+}
 
+const get_all = async () => {
+	return await Point.find().sort({ createdAt: 1 })
 }
 
 
 
-export default { set_input, set_output, get_inputs_without_output }
+
+
+export default { set_input, set_output, get_all, update_projects, get_inputs_without_output }

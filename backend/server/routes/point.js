@@ -12,4 +12,14 @@ router.post('/output', async (req, res, next) => {
   res.send(point);
 });
 
+router.get('/', async (req, res, next) => {
+  const points = await pointService.get_all()
+  res.send(points);
+});
+
+router.put('/', async (req, res, next) => {
+  const points = await pointService.update_projects(req.body)
+  res.send(points);
+});
+
 export default router;
