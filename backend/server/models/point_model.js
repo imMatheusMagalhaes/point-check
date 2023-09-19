@@ -14,7 +14,7 @@ const PointSchema = new mongoose.Schema({
 	},
 	outputTime: {
 		type: Date,
-		get: (date) => moment(new Date(date)).format('LT')
+		get: (date) => date ? moment(new Date(date)).format('LT') : null
 	},
 	createdAt: {
 		type: Date,
