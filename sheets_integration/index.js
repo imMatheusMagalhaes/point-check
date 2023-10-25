@@ -1,16 +1,30 @@
 const findEndpoint = "http://54.224.80.47:3000/point";
+const authEndpoint = "http://54.224.80.47:3000/auth/sign-in";
 
 function lookupInspection() {
 
 	const activeSheetsApp = SpreadsheetApp.getActiveSpreadsheet();
 	const sheet = activeSheetsApp.getSheets()[0];
 
-	const options = {
-		method: 'get'
+	const authOptions = {
+		method: 'POST',
+    "contentType" : "application/json",
+		payload: JSON.stringify({
+			"email": "mathmagga@gmail.com",
+			"password": "12341234"
+		})
 	};
+	const authResponse = UrlFetchApp.fetch(authEndpoint, authOptions);
+  const auth = JSON.parse(authResponse.getContentText())
 
-	const response = UrlFetchApp.fetch(findEndpoint, options);
-	const documents = JSON.parse(response.getContentText())
+	const pointsOptions = {
+		method: 'get',
+		headers: {
+			Authorization: auth.token
+		}
+	};
+	const points = UrlFetchApp.fetch(findEndpoint, pointsOptions);
+	const documents = JSON.parse(points.getContentText())
 
 	for (d = 1; d <= documents.length; d++) {
 		let doc = documents[d - 1]
