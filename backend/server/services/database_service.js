@@ -21,7 +21,7 @@ const database_start = () => {
 	const db = mongoose.connection;
 	db.on("error", () => { console.error(console, "connection error: ") });
 	db.once("open", () => {
-		console.debug("✅ database connect successfully");
+		console.debug(`${dbname} database connects`);
 	});
 }
 

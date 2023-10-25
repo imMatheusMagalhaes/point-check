@@ -1,4 +1,4 @@
-const findEndpoint = "http://54.224.80.47:3000/points";
+const findEndpoint = "http://54.224.80.47:3000/point";
 
 function lookupInspection() {
 

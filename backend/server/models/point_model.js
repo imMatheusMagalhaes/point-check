@@ -7,6 +7,10 @@ const PointSchema = new mongoose.Schema({
 		type: Array,
 		required: true,
 	},
+	userId: {
+		type: String,
+		required: true,
+	},
 	inputTime: {
 		type: Date,
 		required: true,

@@ -2,3 +2,5 @@ backend/node_modules
 backend/dist-server
 backend/package-lock.json
 backend/.env
+backend/.env.production
+backend/.env
