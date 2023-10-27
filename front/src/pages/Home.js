@@ -1,22 +1,40 @@
 import * as React from 'react';
-import { ActivityIndicator, Button, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { sign_in } from '../services/auth';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useAuth } from '../contexts/auth';
+import { get_all, input, output } from "../services/point";
+import { useLoader } from '../contexts/loader';
 
 function Home() {
-  const [email, set_email] = React.useState("");
-  const [password, set_password] = React.useState("");
-  const [is_loading, set_is_loading] = React.useState(false);
+  const { sign_out } = useAuth();
+  const [is_output, set_is_output] = React.useState()
 
-  const login = async function () {
-    set_is_loading(true)
-    set_is_loading(false)
+  const { show_loader, hide_loader } = useLoader();
+
+  function handleSignOut() {
+    sign_out();
   }
+  async function handle_point(method) {
+    show_loader()
+    await method();
+    set_is_output(!is_output)
+    hide_loader()
+  }
+
+  async function handler_point_check() {
+    const points = await get_all()
+    const is_output = points.some(point => !point.outputTime)
+    set_is_output(is_output)
+  }
+
+  React.useEffect(() => {
+    handler_point_check()
+  }, [])
+
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <TouchableOpacity style={styles.button} onPress={login}>
-        {!is_loading ? <Text style={{ color: "white", textAlign: "center" }}>Entrar</Text> :
-          <ActivityIndicator color="white" />}
+      <TouchableOpacity style={styles.button} onPress={is_output ? () => handle_point(output) : () => handle_point(input)}>
+        <Text style={{ color: "white", textAlign: "center" }}>{is_output ? "Sair" : "Entrar"}</Text>
       </TouchableOpacity>
     </View>
   );

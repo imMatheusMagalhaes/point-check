@@ -1,18 +1,20 @@
 import * as React from 'react';
-import { ActivityIndicator, Button, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { sign_in } from '../services/auth';
+import { ActivityIndicator, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { useAuth } from '../contexts/auth';
+import { useLoader } from '../contexts/loader';
 
-function SignIn({ navigation }) {
+function SignIn() {
   const [email, set_email] = React.useState("");
   const [password, set_password] = React.useState("");
-  const [is_loading, set_is_loading] = React.useState(false);
+  const { sign_in } = useAuth();
+  const {show_loader, hide_loader } = useLoader();
 
-  const login = async function () {
-    set_is_loading(true)
+  async function login() {
+    show_loader()
     await sign_in(email, password)
-    set_is_loading(false)
-    navigation.push('Home')
+    hide_loader()
   }
+
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
@@ -31,8 +33,7 @@ function SignIn({ navigation }) {
         placeholder="Senha"
       />
       <TouchableOpacity style={styles.button} onPress={login}>
-        {!is_loading ? <Text style={{ color: "white", textAlign: "center" }}>Entrar</Text> :
-          <ActivityIndicator color="white" />}
+        <Text style={{ color: "white", textAlign: "center" }}>Entrar</Text>
       </TouchableOpacity>
     </View>
   );

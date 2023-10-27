@@ -1,18 +1,14 @@
 import * as React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import SignIn from "../pages/SignIn";
-import Home from '../pages/Home';
+import AuthContext, { useAuth } from '../contexts/auth';
+import AppRoutes from './app';
+import AuthRoutes from './auth';
 
-const Stack = createNativeStackNavigator();
 
 function Router() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="Entrar" component={SignIn} />
-      <Stack.Screen name="Home" component={Home} />
-    </Stack.Navigator>
-  );
+  const { signed, loading } = useAuth();
+  if (loading)
+    return <Loader />
+  return signed ? <AppRoutes /> : <AuthRoutes />;
 }
 
 export default Router;
