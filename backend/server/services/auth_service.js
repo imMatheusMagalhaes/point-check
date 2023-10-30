@@ -12,6 +12,15 @@ const sign_up = async (body) => {
     await new User({ name, email, password }).save()
     return http_response.success_response({ message: "Usuário criado" })
   } catch (error) {
+    if (error.errors) {
+      const errors = JSON.parse(JSON.stringify(error.errors))
+      let message = ""
+      Object.keys(body).forEach((key) => {
+        if (errors[key])
+          message = message + errors[key].message + "\n"
+      })
+      return http_response.error_response({ message })
+    }
     if (error.code === 11000)
       return http_response.error_response({ message: "E-mail já cadastrado" })
     return http_response.error_response({ message: JSON.stringify(error) })

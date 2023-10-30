@@ -8,7 +8,13 @@ const success_response = (params) => {
 const error_response = (params) => {
   if (params.message.includes("não encontrado"))
     return { status: 404, ...params }
-  if (params.message.includes("inválido") || params.message.includes("mais de") | params.message.includes("já cadastrado"))
+  if (
+    params.message.includes("inválido") |
+    params.message.includes("mais de") |
+    params.message.includes("já cadastrado") |
+    params.message.includes("pequeno") |
+    params.message.includes("e-mail válido")
+  )
     return { status: 400, ...params }
   return { status: 500, ...params }
 }

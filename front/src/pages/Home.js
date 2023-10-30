@@ -42,12 +42,13 @@ function Home() {
 
 const styles = StyleSheet.create({
   button: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
+    width: 100,
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
     padding: 10,
-    width: "90%",
-    backgroundColor: "black",
+    borderRadius: 100,
+    backgroundColor: 'black',
   },
 });
 

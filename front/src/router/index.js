@@ -1,8 +1,7 @@
 import * as React from 'react';
-import AuthContext, { useAuth } from '../contexts/auth';
+import { useAuth } from '../contexts/auth';
 import AppRoutes from './app';
 import AuthRoutes from './auth';
-
 
 function Router() {
   const { signed, loading } = useAuth();
