@@ -7,6 +7,7 @@ import { useLoader } from '../contexts/loader';
 function Home() {
   const { sign_out } = useAuth();
   const [is_output, set_is_output] = React.useState()
+  const [last_point, set_last_point] = React.useState()
 
   const { show_loader, hide_loader } = useLoader();
 
@@ -24,6 +25,7 @@ function Home() {
     const points = await get_all()
     const is_output = points.some(point => !point.outputTime)
     set_is_output(is_output)
+    set_last_point(points[points.length - 1])
   }
 
   React.useEffect(() => {
@@ -33,6 +35,11 @@ function Home() {
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <View style={{marginBottom: "20%"}}>
+        <Text style={{ textAlign: "center" }}>Último ponto:</Text>
+        <Text style={{ textAlign: "center" }}>{last_point?.createdAt}</Text>
+        <Text style={{ textAlign: "center" }}>{last_point?.outputTime ?? "Pendente"}</Text>
+      </View>
       <TouchableOpacity style={styles.button} onPress={is_output ? () => handle_point(output) : () => handle_point(input)}>
         <Text style={{ color: "white", textAlign: "center" }}>{is_output ? "Sair" : "Entrar"}</Text>
       </TouchableOpacity>

@@ -7,6 +7,16 @@
     },
     "android": {
       "package": "com.dev_matheus.front"
-    }
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true
+          }
+        }
+      ]
+    ]
   }
 }
