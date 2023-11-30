@@ -21,7 +21,7 @@ function SignIn() {
   }
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View className="flex-1 items-center justify-center">
       <TextInput
         style={styles.input}
         onChangeText={set_email}

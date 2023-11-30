@@ -30,6 +30,11 @@ function AuthProvider({ children }) {
     await AsyncStorage.clear();
   }
 
+  request.interceptors.response.use(null, function (error) {
+    if (error.response.status === HttpStatusCode.Unauthorized)
+      sign_out()
+  })
+
   useEffect(() => {
     async function loadStorageData() {
       const storagedToken = await AsyncStorage.getItem('@RNAuth:token');
