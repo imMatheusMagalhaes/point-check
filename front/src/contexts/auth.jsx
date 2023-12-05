@@ -33,6 +33,7 @@ function AuthProvider({ children }) {
   request.interceptors.response.use(null, function (error) {
     if (error.response.status === HttpStatusCode.Unauthorized)
       sign_out()
+    return Promise.reject(error)
   })
 
   useEffect(() => {

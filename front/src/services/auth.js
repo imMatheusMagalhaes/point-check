@@ -12,9 +12,8 @@ const sign_in = async function (email, password) {
     const response = await request.post("/auth/sign-in", { email, password })
     return response.data
   } catch (error) {
-    if (error.response?.data?.status in HttpError) 
+    if (error.response?.data?.status in HttpError)
       return Alert.alert("Problema", error.response.data.message)
-    
     throw error
   }
 }
@@ -24,9 +23,9 @@ const sign_up = async function (name, email, password) {
     const response = await request.post("/auth/sign-up", { name, email, password })
     return response.data
   } catch (error) {
-    if (error.response?.data?.status in HttpError) 
+    if (error.response?.data?.status in HttpError)
       return Alert.alert("Problema", error.response.data.message)
-    
+
     throw error
   }
 }
